@@ -18,6 +18,8 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	vertical-align: baseline;
+	font-weight: 500;
+	line-height: 0.75rem;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -60,7 +62,6 @@ input {
 html, body {
 	height: 100%;
 }
-
 `;
 
 export default GlobalStyle;

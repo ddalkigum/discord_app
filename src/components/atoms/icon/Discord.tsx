@@ -7,7 +7,7 @@ interface DiscordProps {
   color?: string;
 }
 
-const Discord: React.FC<DiscordProps> = ({ width = 30, height = 30, color = '#343434' }) => {
+const Discord: React.FC<DiscordProps> = ({ width = 30, height = 30, color = '#9c9c9c' }) => {
   return (
     <BaseSvg width={width} height={height} color={color} viewBox="0 -28.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
       <g>

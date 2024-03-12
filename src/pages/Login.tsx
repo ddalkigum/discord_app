@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Container from '../container';
+import * as Organism from '../components/organisms';
 
 const Block = styled.div`
   width: 100%;
@@ -66,9 +67,9 @@ const QrBlock = styled.div`
 `
 
 const QrSupportBlock = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   h2 {
     color: #dfdfdf;

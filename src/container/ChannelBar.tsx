@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import * as Icon from '../components/atoms/icon';
 
 const Block = styled.div`
-  width: 200px;
+  width: 240px;
   height: 100vh;
-  background-color: #000;
-  opacity: 0.8;
+  background-color: #616161;
   padding: 20px 8px 20px 8px;
 `
 

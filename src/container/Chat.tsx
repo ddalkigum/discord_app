@@ -7,8 +7,7 @@ import * as Icon from '../components/atoms/icon';
 
 const Block = styled.div`
   width: 100%;
-  background-color: #000;
-  opacity: 0.7;
+  background-color: #3f3f3f;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -91,7 +90,7 @@ const Chat = () => {
     setMessage(e.target.value);
   }
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleSendMessage();
     }
@@ -120,7 +119,7 @@ const Chat = () => {
           type="text"
           value={message}
           onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
         />
         <button onClick={handleSendMessage}>Send</button>
         <button onClick={handleDisconnect}>Disconnect</button>

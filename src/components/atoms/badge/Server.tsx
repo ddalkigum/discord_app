@@ -6,17 +6,14 @@ const Block = styled.div`
   width: 45px;
   height: 45px;
   border-radius: 50px;
-  background-color: #9c9c9c;
+  background-color: #343434;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-interface ChannelProps {
-  a?: any
-}
 
-const Channel: React.FC<ChannelProps> = () => {
+const Server = () => {
   return (
     <Block>
       <Atoms.Icon.Discord />
@@ -24,4 +21,4 @@ const Channel: React.FC<ChannelProps> = () => {
   );
 }
 
-export default Channel;
+export default Server;

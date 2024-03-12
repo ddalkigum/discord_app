@@ -1,15 +1,5 @@
 import { atom } from 'recoil';
 
-export const passwordModalHandler = atom({
-  key: 'passwordModalActive',
-  default: false,
-})
-
-export const signupModalHandler = atom({
-  key: 'signupModalActive',
-  default: false,
-})
-
 export const userHandler = atom({
   key: 'user',
   default: {
@@ -27,4 +17,9 @@ export const modalHandler = atom({
     signup: false,
     createServer: false,
   }
+})
+
+export const serverHandler = atom({
+  key: 'server',
+  default: [],
 })

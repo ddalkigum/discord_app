@@ -1,19 +1,18 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import styled from 'styled-components'
-import { modalHandler } from '../../atom'
+import { modalHandler } from '../../../atom'
 
 const Block = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
 `
 
 const InfoBlock = styled.div`
   width: 440px;
   height: 200px;
-  position: absolute;
   background-color: #424242;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -59,14 +58,6 @@ const Button = styled.div`
   }
 `
 
-const BackgroundScreen = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: #000;
-  opacity: 0.5;
-  z-index: 5;
-`
-
 const PasswordFind = () => {
   const [modal, setModal] = useRecoilState(modalHandler);
 
@@ -88,7 +79,6 @@ const PasswordFind = () => {
               <Button>확인</Button>
             </ButtonBlock>
           </InfoBlock>
-          <BackgroundScreen />
         </Block>)
         :
         null

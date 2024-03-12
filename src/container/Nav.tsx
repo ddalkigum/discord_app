@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Atoms from '../components/atoms';
 import Add from '@mui/icons-material/Add';
 import * as Atom from '../components/atoms/icon';
 import { useNavigate } from 'react-router';
-import { createServerResponse } from '../lib/api/server';
+import { createServerResponse, getServerListResponse } from '../lib/api/server';
+import { useRecoilState } from 'recoil';
+import { modalHandler } from '../atom';
 
 const Block = styled.div`
   width: 80px;
@@ -64,18 +66,26 @@ const HomeIconBlock = styled.div`
 
 const Nav = () => {
   const navigate = useNavigate();
-  const [createServerModal, setCreateServerModal] = useState(false);
+  const [modal, setModal] = useRecoilState(modalHandler);
+  const [participateServerList, setParticipateServerList] = useState([]);
+
+  useEffect(() => {
+    getServerListResponse().then((data) => {
+      console.log(data.result)
+      setParticipateServerList(data.result);
+    })
+  }, [])
 
   const handleHome = () => {
     navigate('/home')
   }
 
-  const handleCreateServerModal = () => {
-    setCreateServerModal(true);
+  const handleServerChange = (e: React.MouseEvent<HTMLDivElement>) => {
+    navigate(`/home/${e.currentTarget.id}`)
   }
 
-  const handleCreateServer = async () => {
-    await createServerResponse('', 'community');
+  const handleCreateServerModal = () => {
+    setModal({ ...modal, createServer: !modal.createServer });
   }
 
   return (
@@ -84,27 +94,15 @@ const Nav = () => {
         <Atoms.Icon.Discord color='white' />
       </HomeIconBlock>
       <ServerBlock>
-        <ServerIconBlock>
-          <Atoms.Badge.Channel />
-        </ServerIconBlock>
-        <ServerIconBlock>
-          <Atoms.Badge.Channel />
-        </ServerIconBlock>
-        <ServerIconBlock>
-          <Atoms.Badge.Channel />
-        </ServerIconBlock>
-        <ServerIconBlock>
-          <Atoms.Badge.Channel />
-        </ServerIconBlock>
-        <ServerIconBlock>
-          <Atoms.Badge.Channel />
-        </ServerIconBlock>
-        <ServerIconBlock>
-          <Atoms.Badge.Channel />
-        </ServerIconBlock>
-        <ServerIconBlock>
-          <Atoms.Badge.Channel />
-        </ServerIconBlock>
+        {participateServerList.map((participate, index) => {
+          return (
+            <a key={`server_${index}`} data-tooltip-id='tooltip' data-tooltip-content={participate.server.name}>
+              <ServerIconBlock onClick={handleServerChange} id={participate.server.id}>
+                <Atoms.Badge.Channel />
+              </ServerIconBlock>
+            </a>
+          )
+        })}
       </ServerBlock>
       <a data-tooltip-id='tooltip' data-tooltip-content='서버 생성하기'>
         <CreateServerBlock onClick={handleCreateServerModal}>

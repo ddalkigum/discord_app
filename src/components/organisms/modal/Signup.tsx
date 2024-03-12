@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { signupResponse } from '../../lib/api/auth';
+import { signupResponse } from '../../../lib/api/auth';
 import { useRecoilState } from 'recoil';
-import { modalHandler, signupModalHandler } from '../../atom';
+import { modalHandler } from '../../../atom';
 
 const Block = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
 `
 
 const SignupBlock = styled.div`
@@ -87,14 +86,6 @@ const BackBlock = styled.div`
       border-bottom: 1px solid #00A8FC;
     }
   }
-`
-
-const BackgroundScreen = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: #000;
-  opacity: 0.5;
-  z-index: 5;
 `
 
 const Signup = () => {
@@ -185,7 +176,6 @@ const Signup = () => {
               <h5 onClick={handleSignupModal}>로그인하러 가기</h5>
             </BackBlock>
           </SignupBlock>
-          <BackgroundScreen />
         </Block>
       ) : null
       }

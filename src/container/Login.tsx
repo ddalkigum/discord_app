@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { loginResponse } from '../lib/api/auth';
 import { useRecoilState } from 'recoil';
-import { modalHandler, passwordModalHandler, signupModalHandler } from '../atom';
+import { modalHandler } from '../atom';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 

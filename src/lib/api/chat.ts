@@ -33,3 +33,10 @@ export const disconnectChatRoom = async (roomId: string) => {
   const response = await apiClient.get(`/chat/disconnect/${roomId}`);
   return response.data;
 }
+
+export const sendMessageToRoom = async (roomId: string, content: string) => {
+  const response = await apiClient.post(`/chat/room/send/${roomId}`, {
+    content
+  })
+  return response.data;
+}

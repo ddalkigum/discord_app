@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Container from '../container';
-import * as Organism from '../components/organisms';
+import * as Template from '../components/templates';
 
 const Block = styled.div`
   width: 100%;
@@ -89,7 +88,7 @@ const Login = () => {
         <MainBlock>
           <h2>돌아오신 것을 환영해요!</h2>
           <h4>다시 만나다니 너무 반가워요!</h4>
-          <Container.Login />
+          <Template.Login />
         </MainBlock>
         <SupportBlock>
           <QrBlock>

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Container from '../container';
 import * as Template from '../components/templates';
 
 const Block = styled.div`
@@ -15,8 +14,8 @@ const Home = () => {
 
   return (
     <Block>
-      <Container.Nav />
-      <Container.HomeBar />
+      <Template.Nav />
+      <Template.HomeBar />
       {roomId ? (
         <Template.Chat />
       ) : null}

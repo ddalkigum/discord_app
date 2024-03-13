@@ -18,7 +18,7 @@ function App() {
         return;
       }
 
-      return setUser({
+      setUser({
         id: data.result.id,
         email: data.result.email,
         nickname: data.result.nickname,

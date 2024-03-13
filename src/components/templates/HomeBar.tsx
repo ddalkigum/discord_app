@@ -5,9 +5,11 @@ import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import HeadsetIcon from '@mui/icons-material/Headset';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useRecoilState } from 'recoil';
-import { modalHandler, userHandler } from '../atom';
-import { getChatRoomListResponse } from '../lib/api/chat';
+import { modalHandler, userHandler } from '../../atom';
+import { getChatRoomListResponse } from '../../lib/api/chat';
 import { useNavigate } from 'react-router';
+import { Tooltip } from 'react-tooltip';
+import { logoutResponse } from '../../lib/api/auth';
 
 const Block = styled.div`
   width: 240px;
@@ -109,6 +111,23 @@ const SettingBlock = styled.div`
   }
 `
 
+const LogoutButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 36px;
+  background-color: #4c58d3;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-bottom: 12px;
+
+  &:hover {
+    background-color: #4752c4;
+    cursor: pointer;
+  }
+`
+
 const getParticipantNicknameList = (currentUserNickname: string, participantNicknameList: string[]) => {
   return participantNicknameList.map(nickname => {
     if (nickname !== currentUserNickname) {
@@ -135,6 +154,11 @@ const HomeBar = () => {
 
   const handleChatRoomClick = (e) => {
     navigate(`/home/${e.target.id}`);
+  }
+
+  const handleLogout = async () => {
+    await logoutResponse();
+    navigate('/login');
   }
 
   return (
@@ -172,7 +196,12 @@ const HomeBar = () => {
         <SettingBlock>
           <KeyboardVoiceIcon />
           <HeadsetIcon />
-          <SettingsIcon />
+          <a id='clickable'>
+            <SettingsIcon />
+          </a>
+          <Tooltip anchorSelect='#clickable' clickable>
+            <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+          </Tooltip>
         </SettingBlock>
       </ProfileBlock>
     </Block>

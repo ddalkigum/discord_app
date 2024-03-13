@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as Icon from '../components/atoms/icon';
+import * as Icon from '../atoms/icon';
 
 const Block = styled.div`
   width: 240px;

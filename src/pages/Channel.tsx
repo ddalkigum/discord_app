@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Container from '../container';
+import * as Template from '../components/templates';
 
 const Block = styled.div`
   width: 100%;
@@ -11,8 +11,8 @@ const Block = styled.div`
 const Channel = () => {
   return (
     <Block>
-      <Container.Nav />
-      <Container.ChannelBar />
+      <Template.Nav />
+      <Template.ChannelBar />
     </Block>
   )
 };

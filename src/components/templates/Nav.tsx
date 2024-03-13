@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Atoms from '../components/atoms';
+import Atoms from '../atoms';
 import Add from '@mui/icons-material/Add';
-import * as Atom from '../components/atoms/icon';
+import * as Atom from '../atoms/icon';
 import { useNavigate } from 'react-router';
-import { getServerListResponse } from '../lib/api/server';
+import { getServerListResponse } from '../../lib/api/server';
 import { useRecoilState } from 'recoil';
-import { modalHandler } from '../atom';
+import { modalHandler } from '../../atom';
 
 const Block = styled.div`
   width: 80px;

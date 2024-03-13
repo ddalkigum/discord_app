@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { disconnectChatRoom, getChatHistory } from '../../lib/api/chat';
+import { disconnectChatRoom, getChatHistory, sendMessageToRoom } from '../../lib/api/chat';
 import { io } from 'socket.io-client';
 
 const Block = styled.div`
@@ -127,20 +127,17 @@ const Chat = () => {
   const [_, __, roomId] = window.location.pathname.split('/');
 
   useEffect(() => {
-    getChatHistory(roomId).then(data => {
-      console.log(data)
-    })
+    getChatHistory(roomId).then(data => { })
 
-    const chatSocketInstance = io(`http://localhost:3001/${roomId}`, { timeout: 2000 });
+    const chatSocketInstance = io(`http://localhost:3001`);
 
     setSocket(chatSocketInstance);
 
     chatSocketInstance.on('connect', () => {
       console.log('===== Connect =====');
-      chatSocketInstance.emit('connectData', chatSocketInstance.id);
     })
 
-    chatSocketInstance.on(`/${roomId}-message`, (data) => {
+    chatSocketInstance.on(roomId, (data) => {
       console.log(data)
     })
 
@@ -171,7 +168,9 @@ const Chat = () => {
 
   const sendMessage = () => {
     if (socket && message.trim() !== '') {
-      socket.emit(`/${roomId}-message`, message);
+      sendMessageToRoom(roomId, message).then(result => {
+
+      })
       setMessage('')
     }
   }

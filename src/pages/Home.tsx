@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Container from '../container';
+import * as Template from '../components/templates';
 
 const Block = styled.div`
   width: 100%;
@@ -16,6 +17,9 @@ const Home = () => {
     <Block>
       <Container.Nav />
       <Container.HomeBar />
+      {roomId ? (
+        <Template.Chat />
+      ) : null}
     </Block>
   );
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Container from '../container';
 
 const Block = styled.div`
+  width: 100%;
   height: 100%;
   display: flex;
 `;
@@ -12,7 +13,6 @@ const Channel = () => {
     <Block>
       <Container.Nav />
       <Container.ChannelBar />
-      <Container.Chat />
     </Block>
   )
 };

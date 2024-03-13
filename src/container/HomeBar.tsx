@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import HeadsetIcon from '@mui/icons-material/Headset';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useRecoilState } from 'recoil';
-import { userHandler } from '../atom';
+import { modalHandler, userHandler } from '../atom';
+import { getChatRoomListResponse } from '../lib/api/chat';
+import { useNavigate } from 'react-router';
 
 const Block = styled.div`
   width: 240px;
@@ -36,12 +38,12 @@ const AddChatIconBlock = styled.div`
   cursor: pointer;
 `
 
-const FriendBlock = styled.div`
+const ChatRoomListBlock = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-const FriendNameBlock = styled.div`
+const ChatRoomItemBlock = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -56,7 +58,7 @@ const FriendNameBlock = styled.div`
   }
 `
 
-const FriendImage = styled.div`
+const UserImage = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 50px;
@@ -107,46 +109,61 @@ const SettingBlock = styled.div`
   }
 `
 
+const getParticipantNicknameList = (currentUserNickname: string, participantNicknameList: string[]) => {
+  return participantNicknameList.map(nickname => {
+    if (nickname !== currentUserNickname) {
+      return nickname;
+    }
+  })
+}
+
 const HomeBar = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useRecoilState(userHandler);
+  const [modal, setModal] = useRecoilState(modalHandler);
+  const [chatRoomList, setChatRoomList] = useState([]);
+
+  const handleFindUserModal = () => {
+    setModal({ ...modal, findUser: true });
+  }
+
+  useEffect(() => {
+    getChatRoomListResponse(user.id).then(data => {
+      setChatRoomList(data.result);
+    })
+  }, [])
+
+  const handleChatRoomClick = (e) => {
+    navigate(`/home/${e.target.id}`);
+  }
 
   return (
     <Block>
       <AddChatBlock>
         <h5>대화상대</h5>
         <a data-tooltip-id='tooltip' data-tooltip-content='DM 생성'>
-          <AddChatIconBlock>
+          <AddChatIconBlock onClick={handleFindUserModal}>
             <AddIcon
               color='inherit'
             />
           </AddChatIconBlock>
         </a>
       </AddChatBlock>
-      <FriendBlock>
-        <FriendNameBlock id='AAA'>
-          <FriendImage />
-          <h4>AAA</h4>
-        </FriendNameBlock>
-        <FriendNameBlock id='BBB'>
-          <FriendImage />
-          <h4>BBB</h4>
-        </FriendNameBlock>
-        <FriendNameBlock id='CCC'>
-          <FriendImage />
-          <h4>BBB</h4>
-        </FriendNameBlock>
-        <FriendNameBlock id='DDD'>
-          <FriendImage />
-          <h4>DDD</h4>
-        </FriendNameBlock>
-        <FriendNameBlock id='EEE'>
-          <FriendImage />
-          <h4>EEE</h4>
-        </FriendNameBlock>
-      </FriendBlock>
+      <ChatRoomListBlock>
+        {chatRoomList.map((chatRoom, index) => {
+          return (
+            <ChatRoomItemBlock id={chatRoom.id} key={index} onClick={handleChatRoomClick}>
+              <UserImage />
+              {getParticipantNicknameList(user.nickname, chatRoom.participantNicknameList).map((nickname, index) => {
+                return <h4 key={index}>{nickname}</h4>
+              })}
+            </ChatRoomItemBlock>
+          )
+        })}
+      </ChatRoomListBlock>
       <ProfileBlock>
         <ProfileImageBlock>
-          <FriendImage />
+          <UserImage />
         </ProfileImageBlock>
         <ProfileStatusBlock>
           <h5>{user.nickname}</h5>

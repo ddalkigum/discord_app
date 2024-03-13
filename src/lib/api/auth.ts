@@ -18,3 +18,8 @@ export const loginCheckResponse = async () => {
   const response = await apiClient.get('/auth/login/check');
   return response.data;
 }
+
+export const logoutResponse = async () => {
+  const response = await apiClient.get('/auth/logout');
+  return response.data;
+}

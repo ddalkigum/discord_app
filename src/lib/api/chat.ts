@@ -11,6 +11,25 @@ export const sendChat = async (serverId: string, channelId: string, senderId: st
   return response.data;
 }
 
-export const getChatHistory = async (serverId: string, channelId: string) => {
-  const response = await apiClient.get('/chat/history/')
+export const createChatRoomResponse = async (userId: string, participantId: string) => {
+  const response = await apiClient.post('/chat/room', {
+    userId, participantId
+  })
+
+  return response.data;
+}
+
+export const getChatRoomListResponse = async (userId: string) => {
+  const response = await apiClient.get('/chat/room');
+  return response.data;
+}
+
+export const getChatHistory = async (roomId: string) => {
+  const response = await apiClient.get(`/chat/connect/${roomId}`)
+  return response.data;
+}
+
+export const disconnectChatRoom = async (roomId: string) => {
+  const response = await apiClient.get(`/chat/disconnect/${roomId}`);
+  return response.data;
 }

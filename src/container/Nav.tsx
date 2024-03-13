@@ -4,7 +4,7 @@ import Atoms from '../components/atoms';
 import Add from '@mui/icons-material/Add';
 import * as Atom from '../components/atoms/icon';
 import { useNavigate } from 'react-router';
-import { createServerResponse, getServerListResponse } from '../lib/api/server';
+import { getServerListResponse } from '../lib/api/server';
 import { useRecoilState } from 'recoil';
 import { modalHandler } from '../atom';
 
@@ -71,7 +71,6 @@ const Nav = () => {
 
   useEffect(() => {
     getServerListResponse().then((data) => {
-      console.log(data.result)
       setParticipateServerList(data.result);
     })
   }, [])
@@ -81,7 +80,7 @@ const Nav = () => {
   }
 
   const handleServerChange = (e: React.MouseEvent<HTMLDivElement>) => {
-    navigate(`/home/${e.currentTarget.id}`)
+    navigate(`/channel/${e.currentTarget.id}`)
   }
 
   const handleCreateServerModal = () => {

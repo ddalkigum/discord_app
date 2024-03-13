@@ -16,6 +16,7 @@ export const modalHandler = atom({
     password: false,
     signup: false,
     createServer: false,
+    findUser: false,
   }
 })
 

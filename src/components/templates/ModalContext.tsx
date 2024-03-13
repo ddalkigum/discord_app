@@ -27,6 +27,7 @@ const ModalContext = ({ children }) => {
       <Organism.Modal.PasswordFind />
       <Organism.Modal.Signup />
       <Organism.Modal.CreateServer />
+      <Organism.Modal.FindUser />
       <BackgroundScreen className={isModalActive() ? 'active' : 'deactive'} />
       {children}
     </>

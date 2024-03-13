@@ -19,14 +19,14 @@ time, mark, audio, video {
 	border: 0;
 	vertical-align: baseline;
 	font-weight: 500;
-	line-height: 0.75rem;
+	line-height: 80%;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
+html, body {
 	line-height: 1;
 	width: 100%;
 	height: 100%;

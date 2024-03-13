@@ -12,7 +12,7 @@ const Block = styled.div`
 
 const InnerBlock = styled.div`
   width: 440px;
-  height: 200px;
+  height: 220px;
   background-color: #424242;
   position: absolute;
   top: 50%;
@@ -73,6 +73,22 @@ const Button = styled.div`
   }
 `
 
+const BackBlock = styled.div`
+  width: 100%;
+
+  h5 {
+    font-size: 12px;
+    width: fit-content;
+    font-weight: 400;
+    color: #00A8FC;
+    cursor: pointer;
+
+    &:hover {
+      border-bottom: 1px solid #00A8FC;
+    }
+  }
+`
+
 const CreateServer = () => {
   const [modal, setModal] = useRecoilState(modalHandler);
   const [serverName, setServerName] = useState('');
@@ -88,6 +104,10 @@ const CreateServer = () => {
 
   const handleInputChange = (e) => {
     setServerName(e.target.value);
+  }
+
+  const handleBack = () => {
+    setModal({ ...modal, createServer: false });
   }
 
   return (
@@ -107,6 +127,9 @@ const CreateServer = () => {
                 <Button onClick={handleCreateServer}>생성하기</Button>
               </ButtonBlock>
             </InputBlock>
+            <BackBlock>
+              <h5 onClick={handleBack}>돌아가기</h5>
+            </BackBlock>
           </InnerBlock>
         </Block>
       ) : null}

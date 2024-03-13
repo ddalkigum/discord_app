@@ -4,7 +4,7 @@ import GlobalStyle from './GlobalStyle';
 import { loginCheckResponse } from './lib/api/auth';
 import { useRecoilState } from 'recoil';
 import { userHandler } from './atom';
-import ModalContext from './components/templates/ModalContext';
+import * as Template from './components/templates';
 
 function App() {
   const [user, setUser] = useRecoilState(userHandler);
@@ -33,9 +33,9 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <ModalContext>
+      <Template.ModalContext>
         <AppRouter />
-      </ModalContext>
+      </Template.ModalContext>
     </>
   );
 }

@@ -40,3 +40,8 @@ export const sendMessageToRoom = async (roomId: string, content: string) => {
   })
   return response.data;
 }
+
+export const getRoomUserResponse = async (roomId: string) => {
+  const response = await apiClient.get(`/chat/room/user/${roomId}`);
+  return response.data;
+}

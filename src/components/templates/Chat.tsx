@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { disconnectChatRoom, getChatHistory, sendMessageToRoom } from '../../lib/api/chat';
+import { disconnectChatRoom, getChatHistory, getRoomUserResponse, sendMessageToRoom } from '../../lib/api/chat';
 import { io } from 'socket.io-client';
+import { getDatetimeToKor } from '../../util/date';
 
 const Block = styled.div`
   width: calc(100% - 320px);
@@ -65,9 +66,9 @@ const ChatHistoryBlock = styled.div`
   flex-direction: column;
   gap: 20px;
 
-  &::-webkit-scrollbar {
+  /* &::-webkit-scrollbar {
     display: none;
-  }
+  } */
 `
 
 const ChatItemBlock = styled.div`
@@ -122,12 +123,16 @@ const ChatInputBlock = styled.div`
 `
 
 const Chat = () => {
+  const [_, __, roomId] = window.location.pathname.split('/');
   const [message, setMessage] = useState('');
   const [socket, setSocket] = useState(null);
-  const [_, __, roomId] = window.location.pathname.split('/');
+  const [chatList, setChatList] = useState([]);
+  const scrollRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
-    getChatHistory(roomId).then(data => { })
+    getChatHistory(roomId).then(data => {
+      setChatList(data.result);
+    })
 
     const chatSocketInstance = io(`http://localhost:3001`);
 
@@ -138,7 +143,7 @@ const Chat = () => {
     })
 
     chatSocketInstance.on(roomId, (data) => {
-      console.log(data)
+      setChatList(chatList.concat([data]))
     })
 
     chatSocketInstance.on('disconnect', () => {
@@ -166,10 +171,15 @@ const Chat = () => {
     })
   }, [])
 
+  useEffect(() => {
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [chatList])
+
   const sendMessage = () => {
     if (socket && message.trim() !== '') {
-      sendMessageToRoom(roomId, message).then(result => {
-
+      sendMessageToRoom(roomId, message).then(data => {
+        const newChat = data.result;
+        setChatList(chatList.concat([newChat]));
       })
       setMessage('')
     }
@@ -190,37 +200,21 @@ const Chat = () => {
         </ChatUserBlock>
         <Line />
       </TopNav>
-      <ChatHistoryBlock>
-        <ChatItemBlock>
-          <UserImage />
-          <ChatTextBlock>
-            <ChatInfoBlock>
-              <h5>닉네임</h5>
-              <h6>2022.10.24 오후 10:12:1</h6>
-            </ChatInfoBlock>
-            <span>내용</span>
-          </ChatTextBlock>
-        </ChatItemBlock>
-        <ChatItemBlock>
-          <UserImage />
-          <ChatTextBlock>
-            <ChatInfoBlock>
-              <h5>닉네임</h5>
-              <h6>2022.10.24 오후 10:12:1</h6>
-            </ChatInfoBlock>
-            <span>내용</span>
-          </ChatTextBlock>
-        </ChatItemBlock>
-        <ChatItemBlock>
-          <UserImage />
-          <ChatTextBlock>
-            <ChatInfoBlock>
-              <h5>닉네임</h5>
-              <h6>2022.10.24 오후 10:12:1</h6>
-            </ChatInfoBlock>
-            <span>내용</span>
-          </ChatTextBlock>
-        </ChatItemBlock>
+      <ChatHistoryBlock ref={scrollRef}>
+        {chatList.map((chat, index) => {
+          return (
+            <ChatItemBlock key={index}>
+              <UserImage id={chat.senderId} />
+              <ChatTextBlock>
+                <ChatInfoBlock>
+                  <h5>{chat.sender.nickname}</h5>
+                  <h6>{getDatetimeToKor(chat.createdAt)}</h6>
+                </ChatInfoBlock>
+                <span>{chat.content}</span>
+              </ChatTextBlock>
+            </ChatItemBlock>
+          )
+        })}
         <ChatInputBlock>
           <input
             type="text"
